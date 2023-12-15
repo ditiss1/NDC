@@ -1,0 +1,318 @@
+############################### NAGIOS CORE #####################################
+
+sudo apt install libc6 php python3 python apache2 apache2-utils libgd-dev autoconf make wget tree unzip gcc 
+mkdir backup
+sudo apt install vsftpd
+sudo nano /etc/vsftpd.conf
+sudo systemctl restart vsftpd
+ls
+mv nagios-4.4.5.tar.gz nagios-plugins-release-2.2.1.tar.gz /home/shuhari/backup/
+ls
+cd backup/
+sudo mv nagios-4.4.5.tar.gz /tmp/
+cd /tmp/
+ls
+tar -zxf nagios-4.4.5.tar.gz
+cd nagios-4.4.5
+ls
+sudo ./configure --with-httpd-conf=/etc/apache2/sites-enabled/
+sudo make all all
+sudo make install-groups-users
+sudo passwd nagios
+sudo usermod -aG nagios www-data
+sudo make install
+sudo make install-daemoninit
+sudo make install-conf
+sudo make install-webconf
+sudo make install-config
+sudo make install-commandmode
+sudo a2enmod cgi
+sudo a2enmod rewrite
+sudo systemctl restart apache2
+sudo htpasswd -c /usr/local/nagios/etc/htpasswd.users nagiosadmin
+sudo /usr/local/nagios/bin/nagios -v /usr/local/nagios/etc/nagios.cfg
+sudo systemctl restart apache2
+sudo systemctl restart naigos
+sudo systemctl restart nagios
+
+############################NAGIOS PLUGINs###############################
+sudo apt install automake autotools-dev bc dc build-essential gawk gettext libmcrypt-dev libnet-snmp-perl libssl-dev snmp -y
+cd /
+ls
+cd /tmp/
+ls
+cp /home/shuhari/backup/nagios-plugins-release-2.2.1.tar.gz .
+ls
+tar -zxf nagios-plugins-release-2.2.1.tar.gz
+cd nagios-plugins-release-2.2.1
+ls
+sudo ./tools/setup
+sudo ./configure
+sudo make
+sudo make install
+##########go to browser and check ######
+#######################################ncpa installation in windows############
+install file ncpa.exe
+done in windows 
+check in browser 
+https://ip_of_win:5693
+check content of pc 
+go to debian (where nagios is installed)
+
+cd /usr/local/nagios/libexec/
+sudo chood 755 check_ncpa.py
+sudo ./check_ncpa.py -t pass -H 192.168.80.156 -M memory/virtual
+cd /usr/local/nagios/etc/objects/
+sudo nano commands.cfg
+####in this file at last##########
+
+define command{
+command_name	check NCPA
+command line 	$USERI$/check_ncpa.py -H $HOSTADDRESS$ $ARGI$
+}
+################save it ###############
+sudo /usr/local/nagios/bin/nagios -v /usr/local/nagios/etc/nagios.cfg 
+sudo nano nagios.cfg
+####in this file##########
+uncomment the path of server 
+####in this file at last##########
+sudo nano templates.cfg
+#############in this file ##############
+comment hostgroup
+####in this file at last##########
+cd /usr/local/nagios/etc/
+sudo mkdir servers
+cd servers
+sudo nano win.cfg
+######################in this file #############
+define host {
+use 				windows-server	
+host_name			win
+alias				win10	
+address				ip of win mc
+max_check_attempts	5
+
+}
+define service {
+use 					generic-service
+host_name				win
+service description		ncpa vesion
+check_command			check_ncpa! -t 'password_of_ncpa' -p -P 5693 - system/agent_version
+}
+
+define service {
+use						generic-service			
+host_name				win
+service_description		Cpu avg
+check_command			check_ncpa! -t password -p -P 5693 -M CPU/percent -w 20 -c 40 -q 'aggregate=avg'
+}
+###################save#################
+sudo /usr/local/nagios/bin/nagios -v /usr/local/nagios/etc/nagios.cfg 
+###if 0 error then ok to go ###
+sudo systmctl restart nagios
+sudo systmctl restart apache2
+
+
+############################for linux monitor################3
+sudo apt install libsqlite3-0 
+imort file ncpa.deb 
+sudo dpkg -i ncpa.deb
+now go to file /usr/local/ncpa/etc/ncpa.cfg
+#############in this file ##############
+search community_string = password youwant to give
+#################save the file##########
+check on browser https://ip of debian:5693
+###done in deb, now go to deb. server ###
+go to directory of servers
+cd /usr/local/nagios/etc/servers
+sudo nano deb.cfg
+###########in this file as win ############
+define host {
+use 				linux-server	
+host_name			deb
+alias				deb10	
+address				ip of linux mc
+max_check_attempts	5
+
+}
+define service {
+use 					generic-service
+host_name				deb
+service description		ncpa vesion
+check_command			check_ncpa! -t 'password_of_ncpa' -p -P 5693 - system/agent_version
+}
+
+define service {
+use						generic-service			
+host_name				deb
+service_description		Cpu avg
+check_command			check_ncpa! -t password -p -P 5693 -M CPU/percent -w 20 -c 40 -q 'aggregate=avg'
+}
+##############save and done##############
+snort lab
+####################################
+http://192.168.1.251/sw/sec_tools/IDS/Snort/  //link
+##################################################
+sudo apt install bison flex gcc libdnet libdumbnet-dev libnghttp2-dev libluajit-5.1-dev libssl-dev make openssl wget zlib1g-dev libpcap-dev libpcre3-dev libssl-dev -y
+sudo mkdir /usr/src/snort_src
+sudo wget http://192.168.1.251/sw/sec_tools/IDS/Snort/daq-2.0.6.tar.gz
+sudo tar -zxf daq-2.0.6.tar.gz
+cd daq-2.0.6
+sudo ./configure
+sudo make
+sudo make install
+sudo ldconfig //load the file in memory
+cd ..
+sudo wget http://192.168.1.251/sw/sec_tools/IDS/Snort/snort-2.9.15.tar.gz
+sudo tar -zxf snort-2.9.15.tar.gzcd 
+cd r-2.9.15
+sudo ./configure
+sudo make 	
+sudo make install
+sudo ldconfig
+snort -V
+sudo groupadd snort
+sudo useradd snort -r -s /usr/bin/nologin -c SNORT_IDS -g snort
+sudo mkdir -p /etc/snort/rules
+sudo mkdir /usr/local/bin/snort_dynamicrules
+sudo mkdir /var/log/snort
+sudo cp /usr/src/snort_src/snort-2.9.15/etc/*.conf* /etc/snort
+sudo cp /usr/src/snort_src/snort-2.9.15/etc/*.map /etc/snort
+sudo touch /etc/snort/rules/white_list.rules
+sudo touch /etc/snort/rules/black_list.rules
+sudo touch /etc/snort/rules/local.rules
+sudo chmod -R 5775 /etc/snort/
+sudo chmod -R 5775 /var/log/snort/
+
+sudo chmod -R 5775 /usr/local/bin/snort_dynamicrules/
+sudo chown -R snort:snort /etc/snort/
+sudo chown -R snort:snort /var/log/snort/
+sudo chown -R snort:snort /usr/local/lib/snort_dynamicrules/
+sudo nano /etc/snort/snort.conf
+##here make two changes 
+above step 2 
+
+var RULE_PATH /etc/snort/rules
+var SO_RULE_PATH ../so_rules
+var PREPROC_RULE_PATH ../preproc_rules
+
+var WHITE_LIST_PATH /etc/snort/rules
+var BLACK_LIST_PATH /etc/snort/rules
+## you'll see when editing 
+sudo nano /etc/snort/rules/local.rules
+####add here 
+alert ip any any -> any any (msg: "IP Packets Detected"; sid:10000001;)
+##save and exit
+sudo snort -i ens33 -u snort -c /etc/snort/snort.conf -A console
+#####snort done youll see the packages here open other prompt and ru command
+sudo snort -i ens33
+########################################
+done biaaatchhhhhh!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
+barnyard2
+###################
+sudo apt install autoconf automake default-libmysqlclient-dev dos2unix libmariadbclient-dev libmariadb-dev libtool mariadb-client mariadb-server unzip
+sudo nano /etc/snort/snort.conf 
+#########################
+here in this file search #output unifed in(step6)
+output unified2: filename snort.log, lim 128
+##########save it#######
+cd /var/tmp/
+sudo wget http://192.168.1.251/sw/sec_tools/IDS/Snort/barnyard2-master.zip
+unzip barnyard2-master.zip
+cd barnyard2
+./autogen.sh
+sudo ln -s /usr/include/dumbnet.h /usr/include/dnet.h
+sudo ldconfig
+sudo ./configure --with-mysql --with-mysql-libraries=/usr/lib/x86_64-linux-gnu/
+sudo make
+sudo make install
+sudo make install
+sudo cp etc/barnyard2.conf /etc/snort/
+sudo mkdir /var/log/barnyard2
+sudo chown snort.snort /var/log/barnyard2/
+sudo touch /var/log/snort/barnnyard2.waldo
+sudo chown snort.snort /var/log/snort/barnnyard2.waldo
+sudo mysql -u root -p
+ CREATE DATABASE IF NOT EXISTS snort;
+ use snort;
+source /var/tmp/barnyard2-master/schemas/create_mysql
+create user 'snort'@'localhost' identified by 'toor';
+grant create, insert, select, delete, update on snort.* to 'snort'@'localhost';
+exit
+####done in mysql
+sudo nano /etc/snort/barnyard2.conf
+log,mysql,user=snort password=toor dname=snort host=localhost
+sudo nano /etc/snort/rules/local.rules
+################in this file
+alert ip 192.168.80.101  any -> any any (msg: "from 192.168.80.103"; sid:10000001; rev:1)
+alert ip 192.168.80.1.251  any -> any any (msg: "from 192.168.80.251"; sid:10000002; rev:1)
+alert ip 192.168.80.105  any -> any any (msg: "from 192.168.80.105"; sid:10000003; rev:1)
+#save
+###########################pending##################################
+
+######################## SQUID ########################################################################
+
+squid reverse proxy inside etc/squid/squid.conf
+
+tag:acl
+acl localnet (add line just below)
+acl shuhari_users dstdomain IP (line 1196)
+
+tag:http_access
+deny
+# (add line just niche)
+http_access allow shuhari_users (line 1380)###################
+
+tag: https_port (add line ke just niche)
+http_port 3128 accel defaultsite=squidip vhost(line 1635)#############
+
+tag:cache_peer
+tag:cache_peer_access (add line just upar)
+cache_peer apacheip parent 80 0 no-query originserver name=shuhari(line 3238)
+
+tag:neighbor_type_domain (add line just above)
+cache_peer_access shuhari allow shuhari_users (line 3277)
+cache_peer_access shuhari deny all (line 3278)
+
+sudo systemctl restart squid
+
+#squid load balancing
+ same as reverse proxy only changes
+
+tag: https_port (add line ke just upar)
+http_port 80 vhost
+
+tag:cache_peer_access (add line just upar)
+cache_peer (apacheip1stmachine) parent 80 0 no-query originserver round-robin weight=1 name=one
+cache_peer (apacheip2ndmachine) parent 80 0 no-query originserver round-robin weight=1 name=two
+
+######################## SQUID ########################################################################
+
+######################## IPTABLES #################################
+
+#!/bin/bash
+mkdir /etc/iptables
+iptables -F
+
+iptables -P INPUT DROP
+iptables -P FORWORD DROP
+iptables -P OUTPUT ACCEPT
+
+iptables -A INPUT -i lo -j ACCEPT
+iptables -A OUTPUT -o lo -j ACCEPT
+
+iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+
+iptables -A OUTPUT -m state --state NEW,ESTABLISHED,RELATED -j ACCEPT
+
+sudo sh -c 'iptables-save > /etc/iptables/rules.v4'
+
+iptables-save
+apt-get install iptables-persistent
+
+######################## IPTABLES #################################
+
+
+
