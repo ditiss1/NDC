@@ -208,51 +208,7 @@ sudo snort -i ens33 -u snort -c /etc/snort/snort.conf -A console
 sudo snort -i ens33
 ########################################
 done biaaatchhhhhh!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-
-barnyard2
-###################
-sudo apt install autoconf automake default-libmysqlclient-dev dos2unix libmariadbclient-dev libmariadb-dev libtool mariadb-client mariadb-server unzip
-sudo nano /etc/snort/snort.conf 
-#########################
-here in this file search #output unifed in(step6)
-output unified2: filename snort.log, lim 128
-##########save it#######
-cd /var/tmp/
-sudo wget http://192.168.1.251/sw/sec_tools/IDS/Snort/barnyard2-master.zip
-unzip barnyard2-master.zip
-cd barnyard2
-./autogen.sh
-sudo ln -s /usr/include/dumbnet.h /usr/include/dnet.h
-sudo ldconfig
-sudo ./configure --with-mysql --with-mysql-libraries=/usr/lib/x86_64-linux-gnu/
-sudo make
-sudo make install
-sudo make install
-sudo cp etc/barnyard2.conf /etc/snort/
-sudo mkdir /var/log/barnyard2
-sudo chown snort.snort /var/log/barnyard2/
-sudo touch /var/log/snort/barnnyard2.waldo
-sudo chown snort.snort /var/log/snort/barnnyard2.waldo
-sudo mysql -u root -p
- CREATE DATABASE IF NOT EXISTS snort;
- use snort;
-source /var/tmp/barnyard2-master/schemas/create_mysql
-create user 'snort'@'localhost' identified by 'toor';
-grant create, insert, select, delete, update on snort.* to 'snort'@'localhost';
-exit
-####done in mysql
-sudo nano /etc/snort/barnyard2.conf
-log,mysql,user=snort password=toor dname=snort host=localhost
-sudo nano /etc/snort/rules/local.rules
-################in this file
-alert ip 192.168.80.101  any -> any any (msg: "from 192.168.80.103"; sid:10000001; rev:1)
-alert ip 192.168.80.1.251  any -> any any (msg: "from 192.168.80.251"; sid:10000002; rev:1)
-alert ip 192.168.80.105  any -> any any (msg: "from 192.168.80.105"; sid:10000003; rev:1)
-#save
-###########################pending##################################
-
-######################## SQUID ########################################################################
+######################## SQUID ######################
 
 squid reverse proxy inside etc/squid/squid.conf
 
