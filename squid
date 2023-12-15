@@ -6,3 +6,41 @@ here
 //ctrl + w == for search
 // crtl + t == for search line
 now 
+tag:acl
+acl localnet (add line just below)
+#ipserver#
+acl shuhari_users dstdomain serverIP (line 1196)
+
+tag:http_access
+deny
+# (add line just niche)
+http_access allow shuhari_users (line 1380)###################
+
+tag: https_port (add line ke just niche)
+#ipserver#
+http_port 3128 accel defaultsite=squidip vhost(line 1635)#############
+
+tag:cache_peer
+tag:cache_peer_access (add line just upar)
+#ipclient#
+cache_peer apacheip parent 80 0 no-query originserver name=shuhari(line 3238)
+
+tag:neighbor_type_domain (add line just above)
+cache_peer_access shuhari allow shuhari_users (line 3277)
+cache_peer_access shuhari deny all (line 3278)
+
+sudo systemctl restart squid
+
+#squid load balancing
+ same as reverse proxy only changes
+
+tag: https_port (add line ke just upar)
+http_port 80 vhost
+
+tag:cache_peer_access (add line just upar)
+
+#ip#
+cache_peer (apacheip1stmachine) parent 80 0 no-query originserver round-robin weight=1 name=one     
+#ip#
+cache_peer (apacheip2ndmachine) parent 80 0 no-query originserver round-robin weight=1 name=two
+
