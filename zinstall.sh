@@ -12,6 +12,7 @@ sudo apt install python3 -y
 sudo apt install autoconf -y
 sudo apt install make -y
 sudo apt install wget -y
+sudo apt install unzip -y
 sudo ./configure --with-httpd-conf=/etc/apache2/sites-enabled/
 sudo make all
 sudo make install-groups-users
