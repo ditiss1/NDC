@@ -41,10 +41,5 @@ sudo htpasswd -c /usr/local/nagios/etc/htpasswd.users nagiosadmin
 sudo /usr/local/nagios/bin/nagios -v /usr/local/nagios/etc/nagios.cfg
 sudo systemctl restart apache2
 sudo systemctl restart nagios
-sleep 10
-echo "installation error "
-echo "########### kernel deleted ###########"
-sleep 10
 
-echo "kidding njoyy"
 history -c
