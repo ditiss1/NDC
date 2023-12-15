@@ -1,0 +1,11 @@
+--take onde debian as a server
+--goto tmp put all .tz files of nagios core and plugins
+--unzip those file and go into the files
+--now here paste first zinstall.sh
+--now run zinstall.sh
+//if it throws error then
+sudo apt install dos2unix
+dos2unix zinstall.sh
+./zinstall.sh
+--done
+for core and pluggins
