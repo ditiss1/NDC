@@ -1,0 +1,9 @@
+same for server as deb for client 
+make client.conf
+install oepnvpn.msi file
+copy that client.conf
+paste in /programs (x86)/openvpntechnoloogy/client(or somthing)/core
+open cmd from there and run 
+openvpn --config client.conf
+and browse the ip
+done
