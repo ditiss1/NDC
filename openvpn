@@ -1,0 +1,34 @@
+############### in server deb ###############
+sudo apt install openvpn -y
+nano server.conf
+############## in this file ###############
+proto udp
+port 1194
+dev tun
+auth none
+ifconfig 10.8.0.1 10.8.0.2
+verb 3
+######## save ############
+sudo openvpn --config server.conf
+######################################
+duplicate session and install apache 
+
+############### in client deb ###############
+sudo apt install openvpn -y
+nano client.conf
+
+############## in this file ###############
+remote ip of server
+proto udp
+dev tun
+auth none
+cipher none
+ifconfig 10.8.0.2 10.8.0.1
+verb 3
+######## save ############
+sudo openvpn --config client.conf
+#######################################
+duplicate session and ping both tunnel ips 
+curl apache 
+and all set
+
