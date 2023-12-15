@@ -1,0 +1,8 @@
+########################### server debian ############################
+sudo apt install squid
+sudo nano /etc/swuid/squid.conf -l
+here 
+// ctrl + w again ctrl + t 
+//ctrl + w == for search
+// crtl + t == for search line
+now 
