@@ -1,0 +1,10 @@
+sudo apt install fail2ban -y
+sudo nano /etc/fail2ban/jail.d/defaults-debian.conf
+################ in this file ############################
+enabled = true
+port = ssh
+filter = sshd
+logpath = /var/log/auth.log
+maxretry = 5
+findtime = 600
+bantime = 3600
