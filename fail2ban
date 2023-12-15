@@ -1,5 +1,5 @@
 sudo apt install fail2ban -y
-sudo nano /etc/fail2ban/jail.d/defaults-debian.conf
+sudo nano /etc/fail2ban/jail.conf
 ################ in this file ############################
 enabled = true
 port = ssh
@@ -8,7 +8,7 @@ logpath = /var/log/auth.log
 maxretry = 5
 findtime = 600
 bantime = 3600
-############# show op ########
+############# show op on other debian 10 ########
 to see//
 sudo fail2ban-client status sshd   //to see ip that log in
 sudo fail2ban-client status sshd bantime  //blocking time
