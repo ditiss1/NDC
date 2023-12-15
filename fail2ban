@@ -8,3 +8,9 @@ logpath = /var/log/auth.log
 maxretry = 5
 findtime = 600
 bantime = 3600
+############# show op ########
+to see//
+sudo fail2ban-client status sshd   //to see ip that log in
+sudo fail2ban-client status sshd bantime  //blocking time
+
+
