@@ -30,8 +30,10 @@ cache_peer_access shuhari allow shuhari_users (line 3277)
 cache_peer_access shuhari deny all (line 3278)
 
 sudo systemctl restart squid
-
-#squid load balancing
+##########################################
+go to broweser type ip of squid machine and it will access apache of client 
+ipofsquid:3218  //imp
+################  squid load balancing
  same as reverse proxy only changes
 
 tag: https_port (add line ke just upar)
@@ -43,4 +45,5 @@ tag:cache_peer_access (add line just upar)
 cache_peer (apacheip1stmachine) parent 80 0 no-query originserver round-robin weight=1 name=one     
 #ip#
 cache_peer (apacheip2ndmachine) parent 80 0 no-query originserver round-robin weight=1 name=two
+
 
