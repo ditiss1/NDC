@@ -1,6 +1,7 @@
 sudo apt install fail2ban -y
 sudo nano /etc/fail2ban/jail.conf
 ################ in this file ############################
+[sshd]
 enabled = true
 port = ssh
 filter = sshd
